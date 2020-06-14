@@ -1,3 +1,4 @@
+#Import all libraries
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 
@@ -9,6 +10,7 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'n0m3l0'
 app.config['MYSQL_DB'] = 'test_python'
 
+#Add app to mysql connection
 mysql = MySQL(app)
 
 #Setting
@@ -42,7 +44,7 @@ def add_contact():
         print(email)
         return redirect(url_for('Index'))
 
-
+#Edit route
 @app.route('/edit/<id>')
 def get_contact(id):
     cur = mysql.connection.cursor()
@@ -51,6 +53,7 @@ def get_contact(id):
     print(data[0])
     return render_template('edit_contact.html', contact = data[0])
 
+#Delete route
 @app.route('/delete/<string:id>')
 def delete_contact(id):
     cur = mysql.connection.cursor()
@@ -59,6 +62,7 @@ def delete_contact(id):
     flash('Contact removed successfully')
     return redirect(url_for('Index'))
 
+#Update route
 @app.route('/update/<id>', methods = ['POST'])
 def update_contact(id):
     if request.method == 'POST':
