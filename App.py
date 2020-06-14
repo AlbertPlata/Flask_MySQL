@@ -16,9 +16,13 @@ mysql = MySQL(app)
 def Index():
     return render_template('index.html')
 
-@app.route('/add_contact')
+@app.route('/add_contact', method = ['POST'])
 def add_contact():
-    return 'add contact'
+    if request.method
+
+@app.route('/edit')
+def edit:
+    return 'edit'
 
 @app.route('/delete')
 def delete_contact():
