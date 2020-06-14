@@ -6,7 +6,7 @@ app = Flask(__name__)
 #MySQL connection
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '-'
+app.config['MYSQL_PASSWORD'] = 'n0m3l0'
 app.config['MYSQL_DB'] = 'test_python'
 
 mysql = MySQL(app)
@@ -47,9 +47,13 @@ def add_contact():
 def edit():
     return 'edit'
 
-@app.route('/delete')
-def delete_contact():
-    return 'delete contact'
+@app.route('/delete/<string:id>')
+def delete_contact(id):
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM contacts WHERE id = {0}'.format(id))
+    mysql.connection.commit()
+    flash('Contact removed successfully')
+    return redirect(url_for('Index'))
 
 if __name__ == '__main__':
     app.run(port = 3000, debug = True)
